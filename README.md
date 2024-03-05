@@ -1,6 +1,6 @@
 # AirBnB_clone
 
-Description
+Description:
 This project is an Airbnb clone, a web-based platform that allows users to list, discover, and book accommodations. It aims to replicate the core functionality of Airbnb, providing features for users to search for listings, view details about accommodations, make bookings, and manage their accounts.
 
 Command Interpreter
