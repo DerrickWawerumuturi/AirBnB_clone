@@ -5,7 +5,7 @@ import json
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
-        if len(kwargs) == 0:
+        if kwargs:
             if 'id' in kwargs:
                 self.id  = kwargs['id']
             else:
@@ -21,7 +21,7 @@ class BaseModel:
                                    )
             else:
                 self.created_at = datetime.now()
-            if 'updaed_at' in kwargs:
+            if 'updated_at' in kwargs:
                 self.updated_at = (datetime.
                                    strptime(kwargs['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
                                    )

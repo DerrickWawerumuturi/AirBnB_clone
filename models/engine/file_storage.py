@@ -1,7 +1,13 @@
-
 import json
 import os
 from models.base_model import BaseModel
+from models import user
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
+
 
 class FileStorage:
     """private class attributes 
@@ -13,9 +19,7 @@ class FileStorage:
     def all(self):
         """ returns private class attribute"""
         return FileStorage.__objects
-    """
-    purpose: serializes __objects to the JSON fiel
-    """
+
     def new(self, obj):
         """
         method to set in __objects, the obj with key <obj class name>.id
@@ -23,8 +27,8 @@ class FileStorage:
             obj: the object to be set
         """
         if obj:
-            key = "{}{}".format(type(obj).__name__, obj.id)
-            FileStorage.__objects[key] =  obj
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects[key] =  obj
 
     def save(self):
         """
