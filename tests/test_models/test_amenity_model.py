@@ -17,7 +17,8 @@ class TestAmenity(unittest.TestCase):
     def test_Amenity_inheritence(self):
         """
             tests that the Amenity class Inherits from BaseModel
-        """        new_amenity = Amenity()
+        """
+        new_amenity = Amenity()
         self.assertIsInstance(new_amenity, BaseModel)
 
     def test_Amenity_attributes(self):
