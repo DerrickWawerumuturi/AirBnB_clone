@@ -39,6 +39,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             instance = eval(line_list[0] + "()")
+            storage.new(instance)
+            print("new instance", instance)
             storage.save()
             print(instance.id)
 
@@ -74,10 +76,11 @@ class HBNBCommand(cmd.Cmd):
         line_list = line.split(" ")
         if len(line_list) ==  1 and line_list[0] == "":
             print()
+            
         
             
         
 
 if __name__ == '__main__':
-     HBNBCommand().cmdloop()   
+    HBNBCommand().cmdloop()   
     

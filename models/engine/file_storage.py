@@ -23,18 +23,20 @@ class FileStorage:
             obj: the object to be set
         """
         if obj:
-            key = "{}{}".format(type(obj).__name__, obj.id)
+            key = "{}.{}".format(type(obj).__name__, obj.id)
             FileStorage.__objects[key] =  obj
 
     def save(self):
         """
         serializes __objects to the JSON file (path: __file_path)
         """
+        print("Filestorage:", FileStorage.__objects)
         with open(FileStorage.__file_path,"w", encoding="utf-8") as json_file:
             objects_json = (
                 {k: v.to_dict() for k, v in
                     FileStorage.__objects.items()}
             )
+            
             json.dump(objects_json, json_file)
 
     def reload(self):
