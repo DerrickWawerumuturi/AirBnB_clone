@@ -1,56 +1,57 @@
 #!/usr/bin/python3
+"""
+BaseModel - Module
+BaseModel Parent class,
+ """
+
 import uuid
 from datetime import datetime
 import models
-import json
+
 
 class BaseModel:
+    """
+    BaseModel class Parent class to take care of the initialization,
+    serialization and deserialization of instances
+    """
     def __init__(self, *args, **kwargs):
-        if kwargs:
-            if 'id' in kwargs:
-                self.id  = kwargs['id']
-            else:
-                self.id = str(uuid.uuid4())
-            if 'name' in kwargs:
-                self.name  =  kwargs['name']
-            if 'my_number' in kwargs:
-                self.my_number =  kwargs['my_number']
-
-            if 'created_at' in kwargs:
-                self.created_at = (datetime.
-                                   strptime(kwargs['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
-                                   )
-            else:
-                self.created_at = datetime.now()
-            if 'updated_at' in kwargs:
-                self.updated_at = (datetime.
-                                   strptime(kwargs['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
-                                   )
-            else:
-                self.updated_at = datetime.now()
-        else:
+        """Initialization of a BaseModel instance"""
+        if (len(kwargs) == 0):
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             models.storage.new(self)
-            
+        else:
+            kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
+                                                     "%Y-%m-%dT%H:%M:%S.%f")
+            kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
+                                                     "%Y-%m-%dT%H:%M:%S.%f")
+            for key, val in kwargs.items():
+                if "__class__" not in key:
+                    setattr(self, key, val)
 
     def __str__(self):
-        """return str representation of instance"""
-        return (f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+        """String representation of a BaseModel instance"""
+        return ("[{}] ({}) {}".format(self.__class__.__name__,
+                                      self.id, self.__dict__))
+
+    def __repr__(self):
+        """
+            Return string representation of BaseModel class
+        """
+        return ("[{}] ({}) {}".format(self.__class__.__name__,
+                                      self.id, self.__dict__))
+
     def save(self):
-        """
-        updates the public instance attr updated_at with current datetime
-        """
+        """updates 'updated_at' instance with current datetime"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """
-        returns  a dict containing all keys/values of __dict__ of the instance
-        """
-        my_dict = self.__dict__
-        my_dict['created_at'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
-        my_dict['updated_at'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
-        my_dict.update({'__class__': self.__class__.__name__})
-        return my_dict
+        """Return dictionary representation of BaseModel class."""
+        nw_dct = dict(self.__dict__)
+        nw_dct['__class__'] = self.__class__.__name__
+        nw_dct['created_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        nw_dct['updated_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+
+        return (nw_dct)
