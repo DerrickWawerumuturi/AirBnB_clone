@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ Amenitiy"""
 from models.base_model import BaseModel
 
