@@ -4,7 +4,8 @@
 """
 import json
 from models.base_model import BaseModel
-import models
+from models.user import User
+import os
 
 class FileStorage:
     """
@@ -38,7 +39,7 @@ class FileStorage:
         with open(FileStorage.__file_path, mode='w', encoding="UTF8") as fd:
             json.dump(objects_dict, fd)
 
-   def reload(self):
+    def reload(self):
         """
         method that deserializes the JSOn file to __objects (only
         if the JSON file (__file_path) exists; otherwise, do nothing

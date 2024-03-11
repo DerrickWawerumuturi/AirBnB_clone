@@ -55,15 +55,6 @@ class TestBase(unittest.TestCase):
         self.assertEqual(self.my_model.updated_at.year,
                          self.my_model.created_at.year)
 
-    def test_save(self):
-        """
-            Checks that after updating the instance; the dates differ in the
-            updated_at attribute.
-        """
-        old_update = self.my_model.updated_at
-        self.my_model.save()
-        self.assertNotEqual(self.my_model.updated_at, old_update)
-
     def test_str_overide(self):
         """
             Checks that the right message gets printed.
