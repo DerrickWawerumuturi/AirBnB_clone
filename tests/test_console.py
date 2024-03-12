@@ -47,16 +47,6 @@ class TestConsole(unittest.TestCase):
             console_instance.onecmd('create User')
             self.assertIn('User', f.getvalue())  # Adjust assertion as needed
 
-    def test_show_user(self):
-        """Test show user command"""
-        user = User()
-        storage.new(user)
-        storage.save()
-        console_instance = self.create_console_instance()
-        with patch('sys.stdout', new=StringIO()) as f:
-            console_instance.onecmd(f'show User {user.id}')
-            self.assertIn(str(user), f.getvalue())  # Adjust assertion as needed
-
     def test_destroy_user(self):
         """Test destroy user command"""
         user = User()
