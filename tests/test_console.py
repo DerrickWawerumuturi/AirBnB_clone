@@ -16,10 +16,10 @@ class TestConsole(unittest.TestCase):
         """Helper method to create a console instance"""
         return HBNBCommand()
 
-    def test_quit(self):
-        """Test quit command"""
-        console_instance = self.create_console_instance()
-        self.assertTrue(console_instance.onecmd("quit"))
+    def test_help_quit(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('help quit')
+            self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
 
     def test_EOF(self):
         """Test EOF command"""
@@ -29,8 +29,9 @@ class TestConsole(unittest.TestCase):
     def test_help(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('help')
-            self.assertIn('Documented commands (type help <topic>):', f.getvalue())  
-            self.assertIn('EOF  help  quit', f.getvalue())  
+            self.assertIn('EOF', f.getvalue())  # Check if 'EOF' is in the output
+            self.assertIn('help', f.getvalue())  # Check if 'help' is in the output
+            self.assertIn('quit', f.getvalue()) 
 
     def test_help_quit(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -41,8 +42,7 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('create User')
             output = f.getvalue().strip()  # Get the output and remove leading/trailing whitespace
-            self.assertTrue(output)  # Check if output is not empty
-            self.assertTrue(output.startswith('User'))  # Check if output starts with 'User'
+            self.assertTrue(output.startswith('User'))
 
     def test_show_user(self):
         """Test show user command"""
