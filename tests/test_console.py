@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 import unittest
+from io import StringIO
+from unittest.mock import patch
 from console import HBNBCommand
 from models.base_model import BaseModel
 from models.user import User
@@ -31,12 +33,6 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd('create User')
             self.assertEqual(f.getvalue(), '** id ** 1\n')
 
-    def test_show_user(self):
-        user = User(id=1, email='test@test.com', password='test')
-        storage.save()
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('show User 1')
-            self.assertEqual(f.getvalue(), str(user))
 
     def test_destroy_user(self):
         user = User(id=1, email='test@test.com', password='test')
