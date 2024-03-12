@@ -31,13 +31,11 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd('help')
             self.assertIn('EOF', f.getvalue())  # Check if 'EOF' is in the output
             self.assertIn('help', f.getvalue())  # Check if 'help' is in the output
-            self.assertIn('quit', f.getvalue()) 
-
-   def test_help_quit(self):
-    with patch('sys.stdout', new=StringIO()) as f:
-        HBNBCommand().onecmd('help quit')
-        self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
-        
+            self.assertIn('quit', f.getvalue())
+    def test_help_quit(self):
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('help quit')
+            self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
     def test_create_user(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('create User')
