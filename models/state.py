@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-""" The state that the user in in"""
+"""State Module"""
 from models.base_model import BaseModel
+
 
 class State(BaseModel):
     """
-    class state inherits from basemodel
+    All attrbutes should be empty
     """
-    def __init__(self):
-        self.name = ""
+    name = ""
