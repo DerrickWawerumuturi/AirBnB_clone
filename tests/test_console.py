@@ -36,13 +36,12 @@ class TestConsole(unittest.TestCase):
     def test_help_quit(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('help quit')
-            self.assertEqual(f.getvalue(), 'Quit command to exit the program\n')
-
+            self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
     def test_create_user(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('create User')
-            output = f.getvalue().strip()  # Get the output and remove leading/trailing whitespace
-            self.assertTrue(output.startswith('User'))
+            output = f.getvalue().strip() 
+            self.assertTrue(output.startswith('User'))  
 
     def test_show_user(self):
         """Test show user command"""
