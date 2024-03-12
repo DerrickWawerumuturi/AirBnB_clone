@@ -34,9 +34,9 @@ class TestConsole(unittest.TestCase):
             self.assertIn('quit', f.getvalue()) 
 
    def test_help_quit(self):
-       with patch('sys.stdout', new=StringIO()) as f:
-           HBNBCommand().onecmd('help quit')
-           self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
+    with patch('sys.stdout', new=StringIO()) as f:
+        HBNBCommand().onecmd('help quit')
+        self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
         
     def test_create_user(self):
         with patch('sys.stdout', new=StringIO()) as f:
