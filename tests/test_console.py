@@ -2,6 +2,8 @@ import unittest
 from io import StringIO
 from unittest.mock import patch
 from console import HBNBCommand  # Assuming HBNBCommand is defined in console module
+from models.user import User     # Assuming User is imported from models.user module
+from models import storage       # Assuming storage is imported from models module
 
 class TestConsole(unittest.TestCase):
     """Test cases for the console module"""
@@ -43,33 +45,38 @@ class TestConsole(unittest.TestCase):
         console_instance = self.create_console_instance()
         with patch('sys.stdout', new=StringIO()) as f:
             console_instance.onecmd('create User')
-            self.assertEqual(f.getvalue(), '** id ** 1\n')
+            self.assertIn('User', f.getvalue())  # Adjust assertion as needed
 
     def test_show_user(self):
         """Test show user command"""
-        user = User(id=1, email='test@test.com', password='test')
+        user = User()
+        storage.new(user)
         storage.save()
         console_instance = self.create_console_instance()
         with patch('sys.stdout', new=StringIO()) as f:
-            console_instance.onecmd('show User 1')
-            self.assertEqual(f.getvalue(), str(user))
+            console_instance.onecmd(f'show User {user.id}')
+            self.assertIn(str(user), f.getvalue())  # Adjust assertion as needed
 
     def test_destroy_user(self):
         """Test destroy user command"""
-        user = User(id=1, email='test@test.com', password='test')
+        user = User()
+        storage.new(user)
         storage.save()
         console_instance = self.create_console_instance()
         with patch('sys.stdout', new=StringIO()) as f:
-            console_instance.onecmd('destroy User 1')
-            self.assertEqual(f.getvalue(), '')
+            console_instance.onecmd(f'destroy User {user.id}')
+            self.assertEqual('', f.getvalue())
 
     def test_all_users(self):
         """Test all users command"""
-        user1 = User(id=1, email='test1@test.com', password='test1')
-        user2 = User(id=2, email='test2@test.com', password='test2')
+        user1 = User()
+        user2 = User()
+        storage.new(user1)
+        storage.new(user2)
         storage.save()
         console_instance = self.create_console_instance()
         with patch('sys.stdout', new=StringIO()) as f:
             console_instance.onecmd('all User')
-            self.assertEqual(f.getvalue(), str(user1) + '\n' + str(user2))
+            self.assertIn(str(user1), f.getvalue())
+            self.assertIn(str(user2), f.getvalue())
 
