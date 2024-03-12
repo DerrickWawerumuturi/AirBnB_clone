@@ -1,9 +1,10 @@
 import unittest
 from io import StringIO
 from unittest.mock import patch
-from console import HBNBCommand  # Assuming HBNBCommand is defined in console module
-from models.user import User     # Assuming User is imported from models.user module
-from models import storage       # Assuming storage is imported from models module
+from console import HBNBCommand
+from models.user import User
+from models import storage
+
 
 class TestConsole(unittest.TestCase):
     """Test cases for the console module"""
@@ -19,7 +20,8 @@ class TestConsole(unittest.TestCase):
     def test_help_quit(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('help quit')
-            self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
+            self.assertEqual(f.getvalue().strip(),
+                             'Quit command to exit the program')
 
     def test_EOF(self):
         """Test EOF command"""
@@ -29,18 +31,21 @@ class TestConsole(unittest.TestCase):
     def test_help(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('help')
-            self.assertIn('EOF', f.getvalue())  # Check if 'EOF' is in the output
-            self.assertIn('help', f.getvalue())  # Check if 'help' is in the output
+            self.assertIn('EOF', f.getvalue())
+            self.assertIn('help', f.getvalue())
             self.assertIn('quit', f.getvalue())
+
     def test_help_quit(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('help quit')
-            self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
+            self.assertEqual(f.getvalue().strip(),
+                             'Quit command to exit the program')
+
     def test_create_user(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('create User')
             output = f.getvalue().strip()
-            self.assertIn('User', output) 
+            self.assertIn('User', output)
 
     def test_show_user(self):
         """Test show user command"""
@@ -50,7 +55,7 @@ class TestConsole(unittest.TestCase):
         console_instance = self.create_console_instance()
         with patch('sys.stdout', new=StringIO()) as f:
             console_instance.onecmd(f'show User {user.id}')
-            self.assertIn(str(user), f.getvalue())  # Adjust assertion as needed
+            self.assertIn(str(user), f.getvalue())
 
     def test_destroy_user(self):
         """Test destroy user command"""

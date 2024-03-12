@@ -65,8 +65,7 @@ class TestUser(unittest.TestCase):
         latitude = getattr(self.new_place, "latitude")
         self.assertIsInstance(latitude, float)
 
-
-    def test_type_price_by_night(self):
+    def test_typep_rice_by_night(self):
         """
             Test the type of price_by_night
         """
