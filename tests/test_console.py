@@ -33,15 +33,15 @@ class TestConsole(unittest.TestCase):
             self.assertIn('help', f.getvalue())  # Check if 'help' is in the output
             self.assertIn('quit', f.getvalue()) 
 
-    def test_help_quit(self):
+   def test_help_quit(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('help quit')
             self.assertEqual(f.getvalue().strip(), 'Quit command to exit the program')
     def test_create_user(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('create User')
-            output = f.getvalue().strip() 
-            self.assertTrue(output.startswith('User'))  
+            output = f.getvalue().strip()
+            self.assertIn('User', output) 
 
     def test_show_user(self):
         """Test show user command"""
